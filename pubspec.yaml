@@ -1,8 +1,9 @@
 name: bh_shared
 description: "Bianca's House shared package"
-version: 0.0.1
-homepage:
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 0.0.4
+repository: https://github.com/biancashouse/bh_shared
+homepage: https://biancashouse.com/bh_shared
+#publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: '>=3.4.1 <4.0.0'

@@ -111,3 +111,6 @@ GoRouter router = GoRouter.routingConfig(
 ### Miscellaneous useful widgets and methods we found useful
 ...to be added...
 <!-- // end of #include -->
+
+# Issues & Feedback
+Please file an [issue](https://github.com/biancashouse/bh_shared/issues) to send feedback or report a bug. Thank you!
