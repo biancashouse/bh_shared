@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 
-mixin WidgetHelper {
+mixin WidgetHelperMixin {
   bool SHOW_BOXED = false;
   bool DEBUGGING = false;
   Color FUCHSIA_X = const Color.fromRGBO(255, 0, 255, 1);
@@ -730,7 +730,7 @@ mixin WidgetHelper {
     assert(
     left == 0 || right == 0 || top == 0 || bottom == 0,
     );
-    rect ??= Rect.fromLTWH(0, 0, BaseGlobal().scrW, BaseGlobal().scrH);
+    rect ??= Rect.fromLTWH(0, 0, double.infinity, double.infinity);
     return Positioned(
       key: key,
       top: top,
@@ -781,12 +781,13 @@ mixin WidgetHelper {
     String? fontFamily,
     double? letterSpacing,
     FontWeight? fontWeight,
-    double? scaleFactor,
+    double scaleFactor = 1.0,
     int? maxLines,
   }) =>
       Text(
         s,
-        textScaleFactor: scaleFactor,
+        textScaler: TextScaler.linear(scaleFactor),
+        // textScaleFactor: scaleFactor,
         style: TextStyle(
           inherit: true,
           color: color,
@@ -842,8 +843,15 @@ mixin WidgetHelper {
 
   String asset(String name) {
     // only need to specify the asset pkg when used by a client project; i.e. not within the flutter_content project itself
-    return BaseGlobal().skipAssetPkgName
+    return base.skipAssetPkgName
         ? name
         : 'packages/flutter_content/$name';
   }
 }
+
+extension ExtendedOffset on Offset {
+  String toFlooredString() {
+    return '(${dx.floor()}, ${dy.floor()})';
+  }
+}
+
