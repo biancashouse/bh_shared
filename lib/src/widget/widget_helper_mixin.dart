@@ -667,6 +667,8 @@ mixin WidgetHelperMixin {
     ),
   );
 
+  Widget errorIcon(Color color) => Icon(Icons.error, color: color);
+
   /// A custom Path to paint stars.
 
 // PositionedRightTab({required double vPos, required Color bgColor, required Color borderColor, required Widget child}) {

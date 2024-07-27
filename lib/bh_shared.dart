@@ -7,6 +7,7 @@ export 'src/widget/blink.dart';
 export 'src/widget/constant_scroll_behavior.dart';
 export 'src/widget/color_values.dart';
 export 'src/widget/canvas/canvas_helper.dart';
+export 'src/debouncer/debouncer.dart';
 
 // export mixins
 export 'src/home_page_provider/home_page_provider.dart';
