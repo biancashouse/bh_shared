@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class CanvasHelper {
-  static Path drawStar(Size size) {
+mixin CanvasMixin {
+  Path drawStar(Size size) {
 // Method to convert degree to radians
     double degToRad(double deg) => deg * (pi / 180.0);
 

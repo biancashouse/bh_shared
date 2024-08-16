@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:bh_shared/bh_shared.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +55,20 @@ mixin SystemMixin {
     }
   }
 
+  Future<bool> canInformUserOfNewVersion() async {
+    // decide whether new version loaded
+    String? storedVersionAndBuild = await base.localStorage_read(
+        "versionAndBuild");
+    String latestVersionAndBuild = '${yamlVersion}-${yamlBuildNumber}';
+    if (latestVersionAndBuild != (storedVersionAndBuild ?? '')) {
+      await base.localStorage_write('versionAndBuild', latestVersionAndBuild);
+      if (storedVersionAndBuild != null) return true;
+    }
+    return false;
+  }
+
   bool _skipAssetPkgName =
-      false; // when using assets from within the flutter_content pkg itself
+  false; // when using assets from within the flutter_content pkg itself
 
   bool get skipAssetPkgName => _skipAssetPkgName;
 
@@ -74,7 +87,9 @@ mixin SystemMixin {
   Future<String> get versionAndBuild async {
     var ver = await yamlVersion;
     var buildNum = await yamlBuildNumber;
-    return '$ver-$buildNum';
+    return buildNum.isEmpty
+        ? '$ver'
+        : '$ver-$buildNum';
   }
 
 // https://github.com/flutter/flutter/issues/25827 ---------------------------
@@ -82,7 +97,10 @@ mixin SystemMixin {
       FutureBuilder<double?>(
           future: _whenNotZero(
             Stream<double>.periodic(const Duration(milliseconds: 50),
-                (_) => MediaQuery.sizeOf(context).width),
+                    (_) =>
+                MediaQuery
+                    .sizeOf(context)
+                    .width),
           ),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData && (snapshot.data ?? 0) > 0) {
@@ -121,7 +139,7 @@ mixin SystemMixin {
       }
     }
     SchedulerBinding.instance.addPostFrameCallback(
-      (_) {
+          (_) {
         if (savedOffsets.isNotEmpty) {
           for (int i in savedOffsets.keys) {
             scrollControllers![i].jumpTo(savedOffsets[i]!);

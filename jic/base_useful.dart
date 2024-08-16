@@ -170,17 +170,18 @@
 //   /// given a Rect, returns most appropriate alignment between target and callout within the wrapper
 //   /// NOTICE does not depend on callout size
 //
-// // compare appInfo versionAndBuild with this app's yaml values
-// // static Future<bool> possiblyInformUserOfNewVersion() async {
-// //   String appsVersionAndBuildNum = await FC().versionAndBuild;
-// //   String? storedVersionAndBuild = FC().appInfo.versionAndBuildNum ?? '';
-// //   if (appsVersionAndBuildNum != storedVersionAndBuild) {
-// //     FC().appInfo.versionAndBuildNum = appsVersionAndBuildNum;
-// //     if (false) FC().modelRepo.saveAppInfo();
-// //     return true;
-// //   }
-// //   return false;
-// // }
+// compare appInfo versionAndBuild with this app's yaml values
+
+// Future<bool> possiblyInformUserOfNewVersion() async {
+//   String appsVersionAndBuildNum = await FC().versionAndBuild;
+//   String? storedVersionAndBuild = FC().appInfo.versionAndBuildNum ?? '';
+//   if (appsVersionAndBuildNum != storedVersionAndBuild) {
+//     FC().appInfo.versionAndBuildNum = appsVersionAndBuildNum;
+//     if (false) FC().modelRepo.saveAppInfo();
+//     return true;
+//   }
+//   return false;
+// }
 //
 // // static (double, double) ensureOnScreenOLD(Rect calloutRect) {
 // //   double startingCalloutLeft = calloutRect.left;

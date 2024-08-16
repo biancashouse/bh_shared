@@ -1,15 +1,17 @@
+import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 mixin LocalStorageMixin {
 
-  bool initialised = false;
+  static bool initialised = false;
 
   Future<void> localStorage_init() async {
     try {
       HydratedBloc.storage;
       initialised = true;
+      await base.fillGotitCache();
     } catch (e) {
       // init local storage access
       var dir = kIsWeb
@@ -19,6 +21,7 @@ mixin LocalStorageMixin {
         storageDirectory: dir,
       );
       initialised = true;
+      await base.fillGotitCache();
     }
   }
 

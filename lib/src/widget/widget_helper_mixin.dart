@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:image_network/image_network.dart';
 
 mixin WidgetHelperMixin {
@@ -570,31 +571,31 @@ mixin WidgetHelperMixin {
   Paint redBgPaint() => bgPaint(Colors.red);
 
 // ignore: non_constant_identifier_names
-  TextStyle GreyHeadingText() =>
+  TextStyle greyHeadingText() =>
       const TextStyle(color: Colors.grey, fontWeight: FontWeight.w900);
 
 // ignore: non_constant_identifier_names
-  TextStyle BlackText(double size) =>
+  TextStyle blackText(double size) =>
       TextStyle(fontSize: size, color: Colors.black);
 
 // ignore: non_constant_identifier_names
-  TextStyle PinkText(double size) =>
+  TextStyle pinkText(double size) =>
       TextStyle(fontSize: size, color: Colors.pink[500]);
 
 // ignore: non_constant_identifier_names
-  TextStyle BlueText(double size) =>
+  TextStyle blueText(double size) =>
       TextStyle(fontSize: size, color: Colors.blue[500]);
 
 // ignore: non_constant_identifier_names
-  TextStyle GreyItemText() =>
+  TextStyle greyItemText() =>
       const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400);
 
 // ignore: non_constant_identifier_names
-  TextStyle WhiteItemText() =>
+  TextStyle whiteItemText() =>
       const TextStyle(color: Colors.white, fontWeight: FontWeight.w400);
 
 // ignore: non_constant_identifier_names
-  TextStyle WhiteHeadingText() =>
+  TextStyle whiteHeadingText() =>
       const TextStyle(color: Colors.white, fontWeight: FontWeight.w900);
 
   ButtonStyle syncStyle() =>
@@ -629,6 +630,7 @@ mixin WidgetHelperMixin {
   ButtonStyle raisedButtonStyle({
     double elevation = 2,
     EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 16),
+    Color? backgroundColor,
     Color foregroundColor = Colors.grey,
     Size minimumSize = const Size(88, 36),
     dynamic shape = const RoundedRectangleBorder(
@@ -637,6 +639,7 @@ mixin WidgetHelperMixin {
   }) =>
       ElevatedButton.styleFrom(
         elevation: elevation,
+        backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
         textStyle: textStyle,
         minimumSize: minimumSize,
@@ -666,6 +669,8 @@ mixin WidgetHelperMixin {
       },
     ),
   );
+
+  Widget blink(Widget child) => Blink(child: child);
 
   Widget errorIcon(Color color) => Icon(Icons.error, color: color);
 
@@ -849,6 +854,8 @@ mixin WidgetHelperMixin {
         ? name
         : 'packages/flutter_content/$name';
   }
+
+  Widget gap(double gap) => Gap(gap);
 }
 
 extension ExtendedOffset on Offset {
