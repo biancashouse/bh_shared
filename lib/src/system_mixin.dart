@@ -6,12 +6,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 mixin SystemMixin {
   String? _deviceInfo;
   PlatformEnum? _platform;
+  Logger _logger = Logger(
+    printer: PrettyPrinter(),
+  );
+  Logger _loggerNs = Logger(
+    printer: PrettyPrinter(methodCount: 0),
+  );
 
   bool get isWeb => kIsWeb;
 
@@ -57,8 +64,8 @@ mixin SystemMixin {
 
   Future<bool> canInformUserOfNewVersion() async {
     // decide whether new version loaded
-    String? storedVersionAndBuild = await base.localStorage_read(
-        "versionAndBuild");
+    String? storedVersionAndBuild =
+        await base.localStorage_read("versionAndBuild");
     String latestVersionAndBuild = '${yamlVersion}-${yamlBuildNumber}';
     if (latestVersionAndBuild != (storedVersionAndBuild ?? '')) {
       await base.localStorage_write('versionAndBuild', latestVersionAndBuild);
@@ -68,7 +75,7 @@ mixin SystemMixin {
   }
 
   bool _skipAssetPkgName =
-  false; // when using assets from within the flutter_content pkg itself
+      false; // when using assets from within the flutter_content pkg itself
 
   bool get skipAssetPkgName => _skipAssetPkgName;
 
@@ -87,9 +94,7 @@ mixin SystemMixin {
   Future<String> get versionAndBuild async {
     var ver = await yamlVersion;
     var buildNum = await yamlBuildNumber;
-    return buildNum.isEmpty
-        ? '$ver'
-        : '$ver-$buildNum';
+    return buildNum.isEmpty ? '$ver' : '$ver-$buildNum';
   }
 
 // https://github.com/flutter/flutter/issues/25827 ---------------------------
@@ -97,10 +102,7 @@ mixin SystemMixin {
       FutureBuilder<double?>(
           future: _whenNotZero(
             Stream<double>.periodic(const Duration(milliseconds: 50),
-                    (_) =>
-                MediaQuery
-                    .sizeOf(context)
-                    .width),
+                (_) => MediaQuery.sizeOf(context).width),
           ),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData && (snapshot.data ?? 0) > 0) {
@@ -139,7 +141,7 @@ mixin SystemMixin {
       }
     }
     SchedulerBinding.instance.addPostFrameCallback(
-          (_) {
+      (_) {
         if (savedOffsets.isNotEmpty) {
           for (int i in savedOffsets.keys) {
             scrollControllers![i].jumpTo(savedOffsets[i]!);
@@ -156,6 +158,10 @@ mixin SystemMixin {
         fn.call();
       });
 
+  // Logger pkg ---------------------------------------------------------------
+  void  logi(String? s) => _loggerNs.i(s);
+  void  loge(String? s) => _logger.e(s);
+  // Logger pkg ---------------------------------------------------------------
 
 // formattedDate(int ms) => DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(ms));
   formattedDate(int ms) =>

@@ -8,7 +8,6 @@ mixin GotitsMixin {
     String? gotitList = await base.localStorage_read('gotits');
     _features =
         gotitList?.substring(1, gotitList.length - 1).split(',').toList() ?? [];
-    // debugPrint('fillGotitCache: ${_features.toString()}');
   }
 
   void gotit(String feature,
@@ -29,7 +28,6 @@ mixin GotitsMixin {
       base.localStorage_delete('gotits');
     }
     _features.clear();
-    // debugPrint("fca.clearGotits");
   }
 
   Widget gotitButton(
