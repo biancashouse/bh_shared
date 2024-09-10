@@ -64,11 +64,12 @@ mixin SystemMixin {
 
   Future<bool> canInformUserOfNewVersion() async {
     // decide whether new version loaded
+    // var box = Hive.box(await yamlAppName);
     String? storedVersionAndBuild =
-        await base.localStorage_read("versionAndBuild");
+        base.hiveBox.get("versionAndBuild");
     String latestVersionAndBuild = '${yamlVersion}-${yamlBuildNumber}';
     if (latestVersionAndBuild != (storedVersionAndBuild ?? '')) {
-      await base.localStorage_write('versionAndBuild', latestVersionAndBuild);
+      base.hiveBox.put('versionAndBuild', latestVersionAndBuild);
       if (storedVersionAndBuild != null) return true;
     }
     return false;

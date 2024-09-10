@@ -1,39 +1,33 @@
 import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 mixin GotitsMixin {
-  static List<String> _features = [];
 
-  Future<void> fillGotitCache({bool notUsingHydratedStorage = false}) async {
-    String? gotitList = await base.localStorage_read('gotits');
-    _features =
-        gotitList?.substring(1, gotitList.length - 1).split(',').toList() ?? [];
-  }
-
-  void gotit(String feature,
-      {bool notUsingHydratedStorage = false}) {
-    if (!_features.contains(feature)) {
-      _features.add(feature);
-      base.localStorage_write('gotits', _features.toString());
+  Future<void> gotit(String feature,
+      {bool notUsingHydratedStorage = false}) async {
+    List<dynamic> gotits = base.hiveBox.get('gotits') ?? [];
+    if (!gotits.contains(feature)) {
+      gotits.add(feature);
+      base.hiveBox.put('gotits', gotits);
     }
   }
 
-  bool alreadyGotit(String feature,
-      {bool notUsingHydratedStorage = false}) {
-    return _features.contains(feature);
+  bool alreadyGotit(String feature, {bool notUsingHydratedStorage = false}) =>
+    (base.hiveBox.get('gotits') ?? []).contains(feature);
+
+  // List<String> allGotits() {
+  //   List<String> gotits = base.hiveBox.get('gotits') ?? [];
+  //   return gotits;
+  // }
+
+  void clearGotits({bool notUsingHydratedStorage = false}) {
+    base.hiveBox.put('gotits', []);
   }
 
-  void clearGotits({bool notUsingHydratedStorage = false})  {
-    if (!notUsingHydratedStorage) {
-      base.localStorage_delete('gotits');
-    }
-    _features.clear();
-  }
-
-  Widget gotitButton(
-          {required String feature,
-          required double iconSize,
-          bool notUsingHydratedStorage = false}) =>
+  Widget gotitButton({required String feature,
+    required double iconSize,
+    bool notUsingHydratedStorage = false}) =>
       IconButton(
         onPressed: () {
           gotit(feature, notUsingHydratedStorage: notUsingHydratedStorage);

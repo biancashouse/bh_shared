@@ -380,7 +380,7 @@ mixin WidgetHelperMixin {
             ? FadeInImage(
           fadeInDuration: const Duration(milliseconds: 200),
           alignment: alignment,
-          placeholder: const AssetImage('images/load-icon-png.png'),
+          placeholder: const AssetImage('packages/bh_shared/assets/images/loading-icon-256x256.png'),
           image: MemoryImage(bytes),
           width: width,
           height: height,
@@ -390,7 +390,7 @@ mixin WidgetHelperMixin {
             child: FadeInImage(
               fadeInDuration: const Duration(milliseconds: 200),
               alignment: alignment,
-              placeholder: const AssetImage('images/load-icon-png.png'),
+              placeholder: const AssetImage('packages/bh_shared/assets/images/loading-icon-256x256.png'),
               image: MemoryImage(bytes),
               width: width,
               height: height,
@@ -487,7 +487,7 @@ mixin WidgetHelperMixin {
         child: FadeInImage(
           key: key,
           alignment: alignment,
-          placeholder: const AssetImage('images/load-icon-png.png'),
+          placeholder: const AssetImage('packages/bh_shared/assets/images/loading-icon-256x256.png'),
           image: AssetImage(path),
           width: width,
           height: height,

@@ -1,7 +1,20 @@
+
 import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/material.dart';
+import 'package:home_page_provider/home_page_provider.dart';
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await base.initLocalStorage();
+
+  /// demonstrate using the local storage mixin
+  await base.gotit('aggie');
+  await base.gotit('daisie');
+  await base.gotit('blossie');
+  /// end of local storage demo
+
   runApp(const MyApp());
 }
 
@@ -12,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'bh_shared pkg Demo',
       home: HomePageProvider()
           .getWebOrMobileHomePage(const HomePageWeb(), const HomePageMobile()),
     );
