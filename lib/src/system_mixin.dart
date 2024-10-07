@@ -166,7 +166,7 @@ mixin SystemMixin {
 
 // formattedDate(int ms) => DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(ms));
   formattedDate(int ms) =>
-      DateFormat('H:mm, d.MMM').format(DateTime.fromMillisecondsSinceEpoch(ms));
+      DateFormat('MMMMd').format(DateTime.fromMillisecondsSinceEpoch(ms));
 
   String removeNonNumeric(s) => s.replaceAll(RegExp(r"\D"), "");
 }
