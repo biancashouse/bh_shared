@@ -1,39 +1,45 @@
 
 #------------------------------------------------------------------------------------
 
-# create $CIDER-LOG-TYPE.txt
-& pick-cider-log-type
-
-# abort if the file not created
-$ciderLogType = Get-Content CIDER-LOG-TYPE.txt
+. pick-cider-log-type.ps1
+$ciderLogType = pickCiderLogType
 if (-not [string]$ciderLogType) {
-  Write-Host "You didn't supply a cider log message type in file CIDER-LOG-TYPE.txt!"
+  Write-Host "You didn't supply a cider log message type. Aborted."
   exit 1
 }
 
 #------------------------------------------------------------------------------------
 
 # create $CIDER-LOG-MESSAGE.txt
-& input-cider-log-message
+. input-multiline-text.ps1
 
 # abort if the file not created
-$ciderLogMsg = Get-Content CIDER-LOG-MESSAGE.txt
+$ciderLogMsg = inputMultilineText `
+  -windowTitle "Cider Log Message" `
+  -message "Enter the log message text" `
+  -defaultText "The purpose of a changelog entry is to document the
+  noteworthy difference, often across multiple commits,
+  to communicate them clearly to end users.
+
+  If you do nothing else, list deprecations, removals,
+  and any breaking changes in your changelog."
+
 if (-not [string]$ciderLogMsg) {
-  Write-Host "You didn't supply a cider log message in file CIDER-LOG-MESSAGE.txt!"
+  Write-Host "You didn't supply a cider log message. Aborted."
   exit 1
 }
 
 #------------------------------------------------------------------------------------
 
 # update CHANGELOG.md using the multi-line string
-#$lines = Get-Content "CIDER-LOG-MESSAGE.txt"
-#Write-Host $lines
-ForEach($line in $ciderLogMsg) {
-  if ($line -notmatch "unreleased") {
-    & cider log "$ciderLogType" "$line"  }
-}
-#Remove-Item -Path "CIDER-LOG-TYPE.txt"
-#Remove-Item -Path "CIDER-LOG-MESSAGE.txt"
+#ForEach($line in $ciderLogMsg) {
+#  if ($line -notmatch "unreleased") {
+#    $stringWithoutLineBreaks = $line.Replace("`n", "").Replace("`r", "")
+#    cider log "$ciderLogType" "$stringWithoutLineBreaks"
+#  }
+#}
+    $stringWithoutLineBreaks = $ciderLogMsg.Replace("`n", "")
+    cider log "$ciderLogType" "$stringWithoutLineBreaks"
 
 #------------------------------------------------------------------------------------
 
@@ -43,7 +49,6 @@ ForEach($line in $ciderLogMsg) {
 $sourceFile = "COMMIT-MESSAGE.tmp"
 $destinationFile = "COMMIT-MESSAGE.txt"
 Get-Content $sourceFile | Where-Object { $_ -inotmatch "unreleased" } | Set-Content $destinationFile
-#Remove-Item -Path "COMMIT-MESSAGE.tmp"
 
 # abort if the file not created
 $commitMsg = Get-Content $destinationFile

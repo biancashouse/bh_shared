@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,12 @@ import 'package:home_page_provider/home_page_provider.dart';
 
 Future<void> main() async {
 
+  final file = File('CHANGELOG.md');
+
   WidgetsFlutterBinding.ensureInitialized();
+
+  // final s = file.readAsStringSync();
+  // final log = parseChangelog(s);
 
   await base.initLocalStorage();
 
@@ -26,8 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'bh_shared pkg Demo',
-      home: HomePageProvider()
-          .getWebOrMobileHomePage(const HomePageWeb(), const HomePageMobile()),
+      home: HomePageProvider().getWebOrMobileHomePage(const HomePageWeb(), const HomePageMobile()),
     );
   }
 }
