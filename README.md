@@ -1,7 +1,7 @@
 <!-- This file uses generated code. Visit https://pub.dev/packages/readme_helper for usage information. -->
 # bh_shared
 
-<!-- #include readme-intro.md -->
+<!-- #include 1.readme-intro.md -->
 A collection of useful APIs and flutter widgets that are used in our other packages:
 
 - flutter_callouts
@@ -18,9 +18,9 @@ It's sensible to centralise your reusable source code into a separate library.
 
 <!-- #include readme-features.md -->
 ## Features
-- a local storage API (based on HydratedBloc package)
-- home page provider - use a home page for web and a different home page for mobile
-- a dynamic page routing API (based on go_router)
+- a local storage API
+- gotits API (based on local storage)
+- debounce timer
 - some useful widgets
 <!-- // end of #include -->
 
@@ -36,9 +36,9 @@ flutter pub add bh_shared
 you can add the functionality of the API to your own dart classes using the *with* keyword.
 
 ```dart
-class MyClass with BaseUseful, WidgetHelper, LocalStorage {}
+class MyClass with SystemMixin, WidgetHelperMixin, GotitsMixin, LocalStorageMixin, CanvasMixin {}
 ```
-Or, for your convenience, simply prefixany method with __BaseGlobal.__
+Or, for your convenience, simply prefix any method with __base.__
 <!-- // end of #include -->
 
 <!-- #toc -->
@@ -51,10 +51,9 @@ Or, for your convenience, simply prefixany method with __BaseGlobal.__
 [**Quickstart**](#quickstart)
 
 [**Usage**](#usage)
-  - [Local Storage API](#local-storage-api)
-  - [Home Page Provider API](#home-page-provider-api)
-  - [Routing Config Provider API](#routing-config-provider-api)
-  - [Miscellaneous useful widgets and methods we found useful](#miscellaneous-useful-widgets-and-methods-we-found-useful)
+- [Local Storage API](#local-storage-api)
+- [Gotits API](#gotits-api)
+- [Miscellaneous useful widgets and methods we found useful](#miscellaneous-useful-widgets-and-methods-we-found-useful)
 <!-- // end of #toc -->
 
 <!-- #include readme-usage.md -->
@@ -75,42 +74,45 @@ Local storage refers to browser storage on web, and device storage on mobile.
   void localStorage_delete(String name) {}
 ```
 
-### Home Page Provider API
+### Gotits API
 
-This API allows you to have 2 version of your home page: one for web and one for mobile.
-You supply both pages to the API and the appropriate one get used at runtime:
-
-```dart
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-              title: 'Flutter Demo',
-              home: HomePageProvider().getWebOrMobileHomePage(
-                  HomePageWeb(), HomePageMobile(),
-              ),
-    );
-  }
-```
-
-### Routing Config Provider API
-
-Making use of the go_router package, you use this API in a similar way to the Home Page Provider.
-You supply a go_router configuration for both web, and mobile.
-At runtime, the appropriate one gets used:
+This API is useful if you want to allow the user to specify that help has been seen and to not show again. 
+A map of named booleans is stored in local storage.
+Also a useful widget is provided.
 
 ```dart
-GoRouter router = GoRouter.routingConfig(
-    initialLocation: initialRoutePath,
-    routingConfig: RoutingConfigProvider().getWebOrMobileRoutingConfig(
-      widget.webRoutingConfig,
-      widget.mobileRoutingConfig,
-    ));
+Future<void> gotit(String feature, {bool notUsingHydratedStorage = false})
+
+bool alreadyGotit(String feature, {bool notUsingHydratedStorage = false})
+
+void clearGotits({bool notUsingHydratedStorage = false})
+
+Widget gotitButton({required String feature,
+  required double iconSize,
+  bool notUsingHydratedStorage = false})
 ```
 
+### Debouncer API
 
-### Miscellaneous useful widgets and methods we found useful
-...to be added...
-<!-- // end of #include -->
+An instance of DebounceTimer is useful for timing out events, such as repeated keypresses:
+
+```dart
+    class DebounceTimer {
+      int delayMs;
+      Timer? _timer;
+    
+      DebounceTimer({required this.delayMs});
+    
+      void run(VoidCallback action) {
+        _timer?.cancel();
+        _timer = Timer(Duration(milliseconds: delayMs), action);
+      }
+    
+      void cancel() {
+        _timer?.cancel();
+      }
+    }
+```
 
 # Issues & Feedback
 Please file an [issue](https://github.com/biancashouse/bh_shared/issues) to send feedback or report a bug. Thank you!

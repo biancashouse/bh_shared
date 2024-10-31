@@ -39,8 +39,7 @@ dependencies:
     path: ../../home_page_provider_pkg
 
 
-  bh_shared:
-    path: ../
+  bh_shared:  ^3.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
