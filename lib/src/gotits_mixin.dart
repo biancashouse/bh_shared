@@ -1,6 +1,5 @@
 import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 mixin GotitsMixin {
 

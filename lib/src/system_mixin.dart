@@ -13,10 +13,10 @@ import 'package:universal_platform/universal_platform.dart';
 mixin SystemMixin {
   String? _deviceInfo;
   PlatformEnum? _platform;
-  Logger _logger = Logger(
+  final Logger _logger = Logger(
     printer: PrettyPrinter(),
   );
-  Logger _loggerNs = Logger(
+  final Logger _loggerNs = Logger(
     printer: PrettyPrinter(methodCount: 0),
   );
 
@@ -67,7 +67,7 @@ mixin SystemMixin {
     // var box = Hive.box(await yamlAppName);
     String? storedVersionAndBuild =
         base.hiveBox.get("versionAndBuild");
-    String latestVersionAndBuild = '${yamlVersion}-${yamlBuildNumber}';
+    String latestVersionAndBuild = '$yamlVersion-$yamlBuildNumber';
     if (latestVersionAndBuild != (storedVersionAndBuild ?? '')) {
       base.hiveBox.put('versionAndBuild', latestVersionAndBuild);
       if (storedVersionAndBuild != null) return true;
@@ -95,7 +95,7 @@ mixin SystemMixin {
   Future<String> get versionAndBuild async {
     var ver = await yamlVersion;
     var buildNum = await yamlBuildNumber;
-    return buildNum.isEmpty ? '$ver' : '$ver-$buildNum';
+    return buildNum.isEmpty ? ver : '$ver-$buildNum';
   }
 
 // https://github.com/flutter/flutter/issues/25827 ---------------------------

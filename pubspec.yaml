@@ -1,6 +1,6 @@
 name: bh_shared
 description: "Bianca's House shared package"
-version: 3.1.0
+version: 2.1.0
 repository: https://github.com/biancashouse/bh_shared
 homepage: https://biancashouse.com/bh_shared
 #publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -21,13 +21,13 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   intl: ^0.19.0
-  timeago: any
+  timeago: ^3.7.0
   gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: any
+  flutter_lints: ^5.0.0
   mockito: ^5.4.4
 
 # For information on the generic Dart part of this file, see the
