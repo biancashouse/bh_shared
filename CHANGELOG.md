@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - updated readme and did a dart fix --apply
 
+## [Unreleased]
+### Changed
+- pub upgrade device\_info\_plus
+
+## [2.2.0] - 2024-11-01
 ## [2.1.0] - 2024-11-01
 ### Changed
 - breaking - renamed mixins etc
@@ -25,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Adopted cider, so resetting verion to 0.1.0
 
+[Unreleased]: https://github.com/biancashouse/bh_shared/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/biancashouse/bh_shared/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/biancashouse/bh_shared/compare/2.0.2...2.1.0
 [2.0.2]: https://github.com/biancashouse/bh_shared/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/biancashouse/bh_shared/compare/2.0.0...2.0.1
