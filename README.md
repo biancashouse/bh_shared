@@ -53,6 +53,7 @@ Or, for your convenience, simply prefix any method with __base.__
 [**Usage**](#usage)
 - [Local Storage API](#local-storage-api)
 - [Gotits API](#gotits-api)
+- [Debouncer API](#debouncer-api)
 - [Miscellaneous useful widgets and methods we found useful](#miscellaneous-useful-widgets-and-methods-we-found-useful)
 <!-- // end of #toc -->
 
