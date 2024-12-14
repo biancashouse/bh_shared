@@ -142,7 +142,7 @@ mixin SystemMixin {
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         if (savedOffsets.isNotEmpty) {
-          for (ScrollController sC in savedOffsets.keys) {
+          for (ScrollController sC in savedOffsets.keys.toList()) {
             sC.jumpTo(savedOffsets[sC]!);
             // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
           }
