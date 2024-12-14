@@ -65,8 +65,7 @@ mixin SystemMixin {
   Future<bool> canInformUserOfNewVersion() async {
     // decide whether new version loaded
     // var box = Hive.box(await yamlAppName);
-    String? storedVersionAndBuild =
-        base.hiveBox.get("versionAndBuild");
+    String? storedVersionAndBuild = base.hiveBox.get("versionAndBuild");
     String latestVersionAndBuild = '$yamlVersion-$yamlBuildNumber';
     if (latestVersionAndBuild != (storedVersionAndBuild ?? '')) {
       base.hiveBox.put('versionAndBuild', latestVersionAndBuild);
@@ -132,20 +131,19 @@ mixin SystemMixin {
 
   void afterNextBuildDo(VoidCallback fn,
       {List<ScrollController>? scrollControllers}) {
-    Map<int, double> savedOffsets = {};
+    Map<ScrollController, double> savedOffsets = {};
     if (scrollControllers != null && scrollControllers.isNotEmpty) {
-      for (int i = 0; i < scrollControllers.length; i++) {
-        ScrollController sc = scrollControllers[i];
-        if (sc.positions.isNotEmpty) {
-          savedOffsets[i] = sc.offset;
+      for (ScrollController sC in scrollControllers) {
+        if (sC.positions.isNotEmpty) {
+          savedOffsets[sC] = sC.offset;
         }
       }
     }
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         if (savedOffsets.isNotEmpty) {
-          for (int i in savedOffsets.keys) {
-            scrollControllers![i].jumpTo(savedOffsets[i]!);
+          for (ScrollController sC in savedOffsets.keys) {
+            sC.jumpTo(savedOffsets[sC]!);
             // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
           }
         }
@@ -160,8 +158,10 @@ mixin SystemMixin {
       });
 
   // Logger pkg ---------------------------------------------------------------
-  void  logi(String? s) => _loggerNs.i(s);
-  void  loge(String? s) => _logger.e(s);
+  void logi(String? s) => _loggerNs.i(s);
+
+  void loge(String? s) => _logger.e(s);
+
   // Logger pkg ---------------------------------------------------------------
 
 // formattedDate(int ms) => DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(ms));
