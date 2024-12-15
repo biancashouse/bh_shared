@@ -43,6 +43,7 @@ class Error extends StatelessWidget {
                     if (errorMsg != null)
                       Text(
                         errorMsg!,
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.red, fontSize: size),
                       )
                   ],
