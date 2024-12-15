@@ -1,6 +1,6 @@
 name: bh_shared
 description: "Bianca's House shared package"
-version: 2.8.2
+version: 2.8.3
 repository: https://github.com/biancashouse/bh_shared
 homepage: https://biancashouse.com/bh_shared
 #publish_to: 'none' # Remove this line if you wish to publish to pub.dev
