@@ -33,6 +33,7 @@ class Error extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(flutterType),
                         Gap(10),
