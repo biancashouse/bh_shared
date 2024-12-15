@@ -8,7 +8,7 @@ class Error extends StatelessWidget {
   final String? errorMsg;
 
   const Error(this.flutterType,
-      {this.color = Colors.red, this.size, this.errorMsg, super.key});
+      {this.color = Colors.red, this.size, this.errorMsg});
 
   @override
   Widget build(BuildContext context) {
