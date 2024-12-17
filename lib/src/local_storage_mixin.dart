@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-late Box<dynamic> _box;
+Box<dynamic>? _box;
 
 mixin LocalStorageMixin {
 
@@ -17,5 +17,5 @@ mixin LocalStorageMixin {
     }
   }
 
-  Box<dynamic> get hiveBox => _box;
+  Box<dynamic>? get hiveBox => _box;
 }

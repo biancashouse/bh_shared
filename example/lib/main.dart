@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:bh_shared/bh_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:home_page_provider/home_page_provider.dart';
 
 Future<void> main() async {
 
-  final file = File('CHANGELOG.md');
+  // final file = File('CHANGELOG.md');
 
   WidgetsFlutterBinding.ensureInitialized();
 

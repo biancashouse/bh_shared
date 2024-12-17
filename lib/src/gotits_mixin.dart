@@ -5,15 +5,15 @@ mixin GotitsMixin {
 
   Future<void> gotit(String feature,
       {bool notUsingHydratedStorage = false}) async {
-    List<dynamic> gotits = base.hiveBox.get('gotits') ?? [];
+    List<dynamic> gotits = base.hiveBox?.get('gotits') ?? [];
     if (!gotits.contains(feature)) {
       gotits.add(feature);
-      base.hiveBox.put('gotits', gotits);
+      base.hiveBox?.put('gotits', gotits);
     }
   }
 
   bool alreadyGotit(String feature, {bool notUsingHydratedStorage = false}) =>
-    (base.hiveBox.get('gotits') ?? []).contains(feature);
+    (base.hiveBox?.get('gotits') ?? []).contains(feature);
 
   // List<String> allGotits() {
   //   List<String> gotits = base.hiveBox.get('gotits') ?? [];
@@ -21,7 +21,7 @@ mixin GotitsMixin {
   // }
 
   void clearGotits({bool notUsingHydratedStorage = false}) {
-    base.hiveBox.put('gotits', []);
+    base.hiveBox?.put('gotits', []);
   }
 
   Widget gotitButton({required String feature,
