@@ -152,10 +152,26 @@ mixin SystemMixin {
     );
   }
 
-  Future afterMsDelayDo(int millis, VoidCallback fn) async =>
-      Future.delayed(Duration(milliseconds: millis), () {
-        fn.call();
-      });
+  Future afterMsDelayDo(int millis, VoidCallback fn,
+      {List<ScrollController>? scrollControllers}) async {
+    Map<ScrollController, double> savedOffsets = {};
+    if (scrollControllers != null && scrollControllers.isNotEmpty) {
+      for (ScrollController sC in scrollControllers) {
+        if (sC.positions.isNotEmpty) {
+          savedOffsets[sC] = sC.offset;
+        }
+      }
+    }
+    Future.delayed(Duration(milliseconds: millis), () {
+      if (savedOffsets.isNotEmpty) {
+        for (ScrollController sC in savedOffsets.keys.toList()) {
+          sC.jumpTo(savedOffsets[sC]!);
+          // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+        }
+      }
+      fn.call();
+    });
+  }
 
   // Logger pkg ---------------------------------------------------------------
   void logi(String? s) => _loggerNs.i(s);
