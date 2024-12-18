@@ -75,7 +75,7 @@ mixin SystemMixin {
   }
 
   bool _skipAssetPkgName =
-      false; // when using assets from within the flutter_content pkg itself
+  false; // when using assets from within the flutter_content pkg itself
 
   bool get skipAssetPkgName => _skipAssetPkgName;
 
@@ -102,7 +102,10 @@ mixin SystemMixin {
       FutureBuilder<double?>(
           future: _whenNotZero(
             Stream<double>.periodic(const Duration(milliseconds: 50),
-                (_) => MediaQuery.sizeOf(context).width),
+                    (_) =>
+                MediaQuery
+                    .sizeOf(context)
+                    .width),
           ),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData && (snapshot.data ?? 0) > 0) {
@@ -140,10 +143,11 @@ mixin SystemMixin {
       }
     }
     SchedulerBinding.instance.addPostFrameCallback(
-      (_) {
+          (_) {
         if (savedOffsets.isNotEmpty) {
           for (ScrollController sC in savedOffsets.keys.toList()) {
-            sC.jumpTo(savedOffsets[sC]!);
+            if (sC.hasClients)
+              sC.jumpTo(savedOffsets[sC]!);
             // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
           }
         }
@@ -165,7 +169,8 @@ mixin SystemMixin {
     Future.delayed(Duration(milliseconds: millis), () {
       if (savedOffsets.isNotEmpty) {
         for (ScrollController sC in savedOffsets.keys.toList()) {
-          sC.jumpTo(savedOffsets[sC]!);
+          if (sC.hasClients)
+            sC.jumpTo(savedOffsets[sC]!);
           // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
         }
       }
