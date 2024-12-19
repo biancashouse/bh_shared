@@ -75,7 +75,7 @@ mixin SystemMixin {
   }
 
   bool _skipAssetPkgName =
-  false; // when using assets from within the flutter_content pkg itself
+      false; // when using assets from within the flutter_content pkg itself
 
   bool get skipAssetPkgName => _skipAssetPkgName;
 
@@ -102,10 +102,7 @@ mixin SystemMixin {
       FutureBuilder<double?>(
           future: _whenNotZero(
             Stream<double>.periodic(const Duration(milliseconds: 50),
-                    (_) =>
-                MediaQuery
-                    .sizeOf(context)
-                    .width),
+                (_) => MediaQuery.sizeOf(context).width),
           ),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData && (snapshot.data ?? 0) > 0) {
@@ -134,23 +131,11 @@ mixin SystemMixin {
 
   void afterNextBuildDo(VoidCallback fn,
       {List<ScrollController>? scrollControllers}) {
-    Map<ScrollController, double> savedOffsets = {};
-    if (scrollControllers != null && scrollControllers.isNotEmpty) {
-      for (ScrollController sC in scrollControllers) {
-        if (sC.positions.isNotEmpty) {
-          savedOffsets[sC] = sC.offset;
-        }
-      }
-    }
+    Map<ScrollController, double> savedOffsets =
+        saveScrollOffsets(scrollControllers: scrollControllers);
     SchedulerBinding.instance.addPostFrameCallback(
-          (_) {
-        if (savedOffsets.isNotEmpty) {
-          for (ScrollController sC in savedOffsets.keys.toList()) {
-            if (sC.hasClients)
-              sC.jumpTo(savedOffsets[sC]!);
-            // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-          }
-        }
+      (_) {
+        restoreScrollOffsets(savedOffsets);
         fn.call();
       },
     );
@@ -158,24 +143,32 @@ mixin SystemMixin {
 
   Future afterMsDelayDo(int millis, VoidCallback fn,
       {List<ScrollController>? scrollControllers}) async {
-    Map<ScrollController, double> savedOffsets = {};
+    Map<ScrollController, double> savedOffsets = saveScrollOffsets(scrollControllers: scrollControllers);
+    Future.delayed(Duration(milliseconds: millis), () {
+      restoreScrollOffsets(savedOffsets);
+      fn.call();
+    });
+  }
+
+  Map<ScrollController, double> saveScrollOffsets(
+      {List<ScrollController>? scrollControllers}) {
+    Map<ScrollController, double> offsets = {};
     if (scrollControllers != null && scrollControllers.isNotEmpty) {
       for (ScrollController sC in scrollControllers) {
         if (sC.positions.isNotEmpty) {
-          savedOffsets[sC] = sC.offset;
+          offsets[sC] = sC.offset;
         }
       }
     }
-    Future.delayed(Duration(milliseconds: millis), () {
-      if (savedOffsets.isNotEmpty) {
-        for (ScrollController sC in savedOffsets.keys.toList()) {
-          if (sC.hasClients)
-            sC.jumpTo(savedOffsets[sC]!);
-          // scrollControllers![i].animateTo(savedOffsets[i]!, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-        }
+    return offsets;
+  }
+
+  void restoreScrollOffsets(Map<ScrollController, double> offsets) {
+    if (offsets.isNotEmpty) {
+      for (ScrollController sC in offsets.keys.toList()) {
+        if (sC.hasClients) sC.jumpTo(offsets[sC]!);
       }
-      fn.call();
-    });
+    }
   }
 
   // Logger pkg ---------------------------------------------------------------
