@@ -1,45 +1,13 @@
 name: bh_shared
-description: "Bianca's House shared package"
+description: "bh_shared package now rolled into flutter_callout package"
 version: 2.9.3
-repository: https://github.com/biancashouse/bh_shared
-homepage: https://biancashouse.com/bh_shared
+repository: https://github.com/biancashouse/flutter_callouts
+homepage: https://biancashouse.com
 #publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
   flutter: ">=1.17.0"
-
-dependencies:
-  flutter:
-    sdk: flutter
-  logger: ^2.4.0
-  package_info_plus: ^8.0.2
-  universal_platform: ^1.1.0
-  device_info_plus: ^11.1.0
-  path_provider: ^2.1.4
-  image_network: ^2.5.6
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  intl: ^0.19.0
-  timeago: ^3.7.0
-  gap: ^3.0.1
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  mockito: ^5.4.4
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
-flutter:
-
-  uses-material-design: true
-
-  assets:
-    - assets/
-    - assets/images/
 
 cider:
   link_template:

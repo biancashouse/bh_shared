@@ -1,5 +1,9 @@
 <!-- This file uses generated code. Visit https://pub.dev/packages/readme_helper for usage information. -->
-# bh_shared
+# bh_shared (package functionality is relocated to another package)
+
+# *** this library defunct: now rolled into flutter_callout package ***
+#
+#
 
 <!-- #include 1.readme-intro.md -->
 A collection of useful APIs and flutter widgets that are used in our other packages:
