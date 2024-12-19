@@ -1,6 +1,6 @@
 name: bh_shared
 description: "bh_shared package now rolled into flutter_callout package"
-version: 2.9.3
+version: 3.0.0
 repository: https://github.com/biancashouse/flutter_callouts
 homepage: https://biancashouse.com
 #publish_to: 'none' # Remove this line if you wish to publish to pub.dev
